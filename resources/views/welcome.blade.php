@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PULSE — Design. Build. Sync. Together.</title>
+    <title>DeskDev — Design. Build. Sync. Together.</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -196,7 +196,7 @@
      NAV
 ══════════════════════════════════════════════ --}}
 <nav id="main-nav" class="fixed top-0 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-5 py-2.5 w-[92%] max-w-4xl bg-white/95 backdrop-blur-lg rounded-full border-2 border-black mt-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-    <div class="text-xl font-black text-black tracking-tighter select-none">PULSE</div>
+    <div class="text-xl font-black text-black tracking-tighter select-none">DeskDev</div>
 
     <div class="hidden md:flex items-center gap-1">
         <a href="#platform" class="px-3 py-1.5 text-violet-600 font-bold text-sm border-b-2 border-violet-600">Platform</a>
@@ -237,18 +237,7 @@
         <p class="text-sm mt-0.5">Make it pop. 💥</p>
     </div>
 
-    {{-- Sarah badge --}}
-    <div class="bf2 absolute top-36 right-6 xl:right-28 bg-white p-2.5 rounded-xl neobrutalism-border neobrutalism-shadow z-10 hidden lg:flex items-center gap-2.5 card-lift">
-        <div class="relative shrink-0">
-            {{-- Default avatar — no photo --}}
-            <div class="w-9 h-9 rounded-full border-2 border-black bg-violet-500 flex items-center justify-center text-white text-xs font-black select-none">SC</div>
-            <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-white pulse-dot"></span>
-        </div>
-        <div class="text-left">
-            <p class="text-xs font-bold leading-tight">Sarah Chen</p>
-            <p class="text-[10px] text-on-surface-variant">is editing right now…</p>
-        </div>
-    </div>
+  
 
     {{-- Alex cursor badge --}}
     <div class="bf3 absolute bottom-24 left-10 xl:left-32 bg-white p-2 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000] z-10 hidden md:flex items-center gap-1.5 rotate-2 card-lift" style="--r:2deg;">
@@ -279,7 +268,7 @@
     <div class="h-ctas flex gap-3 z-20 flex-wrap justify-center mb-14">
         <button class="btn-shimmer bg-primary text-white font-bold text-lg px-13 py-4 rounded-xl neobrutalism-border neobrutalism-shadow hover:shadow-[8px_8px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center gap-2"
                 style="animation:btn-glow 2.8s ease-in-out 1.6s infinite;">
-            Start Now!
+             <a href="/login">Start Now!</a>
             <span class="material-symbols-outlined" style="font-size:20px;">arrow_forward</span>
         </button>
        
@@ -336,7 +325,7 @@
                         <span class="material-symbols-outlined text-white" style="font-size:18px;">view_kanban</span>
                     </div>
                     <div>
-                        <p class="font-bold text-base leading-tight">Project Pulse</p>
+                        <p class="font-bold text-base leading-tight">Project DeskDev</p>
                         <p class="text-[11px] text-on-surface-variant">Sprint 12 · Active</p>
                     </div>
                 </div>
@@ -700,7 +689,7 @@
 
     <div class="mt-10 z-10">
         <button class="btn-shimmer bg-black text-white font-black text-base px-10 py-4 rounded-full border-2 border-black shadow-[4px_4px_0px_0px_rgba(254,208,27,1)] hover:shadow-[7px_7px_0px_0px_rgba(254,208,27,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all">
-            Start for Free — No credit card needed
+            <a href="/login">Start for Free — No credit card needed</a>
         </button>
     </div>
 
@@ -711,7 +700,7 @@
         <a href="#" class="font-bold uppercase text-sm text-white/80 hover:text-yellow-400 transition-colors">Terms</a>
     </div>
 
-    <p class="text-xs text-white/40 mt-8 z-10 tracking-widest uppercase">©2024 Pulse Systems. All rights reserved.</p>
+    <p class="text-xs text-white/40 mt-8 z-10 tracking-widest uppercase">©2024 DeskDev Systems. All rights reserved.</p>
 </footer>
 
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PULSE — Login</title>
+    <title>DeskDev — Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -69,18 +69,12 @@
                 <div class="w-3 h-3 rounded-full border-2 border-black bg-yellow-400"></div>
                 <div class="w-3 h-3 rounded-full border-2 border-black bg-green-400"></div>
             </div>
-            <div class="font-black text-[11px] tracking-widest text-black/80 uppercase">PULSE.EXE</div>
+            <div class="font-black text-[11px] tracking-widest text-black/80 uppercase">DESKDEV.EXE</div>
             <div class="w-12"></div> <!-- Spacer for balance -->
         </div>
 
         <div class="p-6 sm:px-8 sm:py-6">
-            <!-- Playful Logo Inside -->
-            <div class="flex justify-center mb-4">
-                <a href="/" class="inline-flex flex-col items-center gap-2 group cursor-pointer">
-                    <div class="w-12 h-12 bg-primary border-2 border-black rounded-xl shadow-[3px_3px_0px_0px_#000] flex items-center justify-center text-white font-black text-xl group-hover:-rotate-12 transition-transform duration-300">P</div>
-                </a>
-            </div>
-
+            
             <div class="text-center mb-5">
                 <h1 class="text-xl sm:text-2xl font-black text-black mb-1 tracking-tight">Welcome Back</h1>
                 <p class="text-slate-500 text-xs sm:text-sm font-bold">Ready to get back to work?</p>
@@ -126,7 +120,7 @@
     </div>
     
     <p class="text-center text-xs text-slate-500 mt-4 z-20 font-semibold pop-in" style="animation-delay: 0.2s">
-        Don't have an account? <a href="#" class="font-bold text-black border-b-[2px] border-black hover:text-primary hover:border-primary transition-colors pb-0.5">Sign up instantly</a>
+        Don't have an account? <a href="/dashboard" class="font-bold text-black border-b-[2px] border-black hover:text-primary hover:border-primary transition-colors pb-0.5">Sign up instantly</a>
     </p>
 
     <script>
