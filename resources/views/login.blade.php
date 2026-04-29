@@ -50,9 +50,7 @@
     </div>
 
     {{-- Floating Badges --}}
-    <div class="bf1 absolute top-12 left-6 md:top-24 md:left-24 bg-[#fed01b] p-3 border-2 border-black shadow-[4px_4px_0px_0px_#000] w-[160px] z-10 hidden sm:block rounded-xl" style="--r:-6deg;">
-        <p class="text-[10px] font-black text-black/60 uppercase tracking-widest mb-1">Pro Tip</p>
-        <p class="text-xs font-bold text-black leading-tight">Sign in to start shipping faster! 🚀</p>
+   
     </div>
     <div class="bf2 absolute bottom-12 right-6 md:bottom-24 md:right-24 bg-white p-2.5 border-2 border-black shadow-[4px_4px_0px_0px_#000] z-10 hidden sm:flex items-center gap-3 rounded-xl" style="--r:4deg;">
         <div class="w-8 h-8 rounded-full border-2 border-black bg-emerald-400 flex items-center justify-center text-black font-black shadow-[2px_2px_0px_0px_#000]">

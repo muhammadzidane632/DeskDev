@@ -202,11 +202,10 @@
         <a href="#platform" class="px-3 py-1.5 text-violet-600 font-bold text-sm border-b-2 border-violet-600">Platform</a>
         <a href="#features"  class="px-3 py-1.5 text-black font-bold text-sm hover:text-violet-600 hover:bg-surface-container rounded-md transition-colors">Framework</a>
         <a href="#features"  class="px-3 py-1.5 text-black font-bold text-sm hover:text-violet-600 hover:bg-surface-container rounded-md transition-colors">Docs</a>
-        <a href="#pricing"   class="px-3 py-1.5 text-black font-bold text-sm hover:text-violet-600 hover:bg-surface-container rounded-md transition-colors">Pricing</a>
     </div>
 
-    @if (Route::has('register'))
-        <a href="{{ route('register') }}"
+    @if (Route::has('login'))
+        <a href="{{ route('login') }}"
            class="btn-shimmer bg-violet-600 text-white text-sm font-bold px-5 py-2 rounded-full border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all">
             Get Started
         </a>
@@ -257,11 +256,7 @@
         <span class="bg-primary text-white text-[10px] font-black px-2 py-0.5 rounded-full">Alex's cursor</span>
     </div>
 
-    {{-- Social proof pill --}}
-    <div class="h-pill inline-flex items-center gap-2 bg-white border-2 border-black px-3 py-1.5 rounded-full text-xs font-bold mb-8 shadow-[2px_2px_0px_0px_#000] z-20">
-        <span class="w-2 h-2 bg-green-400 rounded-full pulse-dot"></span>
-        2,400+ teams building together right now
-    </div>
+   
 
     {{-- Headline --}}
     <h1 class="font-black text-on-background max-w-5xl z-20 relative"
@@ -282,15 +277,12 @@
 
     {{-- CTAs --}}
     <div class="h-ctas flex gap-3 z-20 flex-wrap justify-center mb-14">
-        <button class="btn-shimmer bg-primary text-white font-bold text-lg px-9 py-4 rounded-xl neobrutalism-border neobrutalism-shadow hover:shadow-[8px_8px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center gap-2"
+        <button class="btn-shimmer bg-primary text-white font-bold text-lg px-13 py-4 rounded-xl neobrutalism-border neobrutalism-shadow hover:shadow-[8px_8px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center gap-2"
                 style="animation:btn-glow 2.8s ease-in-out 1.6s infinite;">
-            Start Playing
+            Start Now!
             <span class="material-symbols-outlined" style="font-size:20px;">arrow_forward</span>
         </button>
-        <button class="btn-shimmer bg-white text-black font-bold text-lg px-9 py-4 rounded-xl neobrutalism-border neobrutalism-shadow hover:bg-surface-container hover:shadow-[8px_8px_0px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center gap-2">
-            <span class="material-symbols-outlined" style="font-size:20px;">play_circle</span>
-            View Demo
-        </button>
+       
     </div>
 
     {{-- Trust row --}}
@@ -306,10 +298,6 @@
         <div class="flex items-center gap-1.5">
             <span class="text-secondary-container text-lg leading-none">★★★★★</span>
             <span class="text-on-surface-variant font-medium"><strong class="text-on-background">4.9</strong> avg rating</span>
-        </div>
-        <div class="flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-tertiary" style="font-size:18px;">verified</span>
-            <span class="text-on-surface-variant font-medium">SOC 2 <strong class="text-on-background">compliant</strong></span>
         </div>
     </div>
 </section>
@@ -691,31 +679,7 @@
 </section>
 
 
-{{-- ══════════════════════════════════════════════
-     STATS BAND
-══════════════════════════════════════════════ --}}
-<section id="stats-section" class="w-full bg-inverse-surface border-y-2 border-black py-16 px-6 md:px-12 lg:px-16 reveal">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-0 md:divide-x md:divide-white/10">
-        <div class="text-left md:pr-10">
-            <p class="font-black text-white" style="font-size:clamp(2.5rem,5.5vw,4rem); line-height:1; letter-spacing:-0.04em;">
-                <span class="stat-num" data-target="2400" data-suffix=",">0</span><span class="text-secondary-container">+</span>
-            </p>
-            <p class="text-white/60 text-sm font-medium mt-1">Teams onboarded worldwide</p>
-        </div>
-        <div class="text-left md:text-center md:px-10">
-            <p class="font-black text-white" style="font-size:clamp(2.5rem,5.5vw,4rem); line-height:1; letter-spacing:-0.04em;">
-                <span class="stat-num" data-target="3">0</span><span class="text-secondary-container">×</span>
-            </p>
-            <p class="text-white/60 text-sm font-medium mt-1">Faster shipping, on average</p>
-        </div>
-        <div class="text-left md:text-right md:pl-10">
-            <p class="font-black text-white" style="font-size:clamp(2.5rem,5.5vw,4rem); line-height:1; letter-spacing:-0.04em;">
-                <span class="stat-num" data-target="4.9" data-decimal="1">0</span><span class="text-secondary-container">★</span>
-            </p>
-            <p class="text-white/60 text-sm font-medium mt-1">Average product rating</p>
-        </div>
-    </div>
-</section>
+
 
 
 {{-- ══════════════════════════════════════════════
@@ -731,7 +695,7 @@
 
     <h2 class="font-black uppercase italic leading-none text-yellow-400 tracking-tighter select-none hover:-rotate-1 transition-transform z-10 text-center w-full"
         style="font-size:clamp(3rem,11vw,11rem);">
-        READY TO PLAY?
+        READY TO Start Your Journal ?
     </h2>
 
     <div class="mt-10 z-10">
