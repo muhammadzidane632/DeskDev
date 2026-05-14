@@ -162,11 +162,7 @@
                     </a>
                 </div>
                 
-                <!-- Teams -->
-                <div class="px-3 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 mt-8">
-                    <span>Teams</span>
-                    <span class="material-symbols-outlined text-[18px] cursor-pointer hover:text-black">open_in_new</span>
-                </div>
+                <!-- Teams Section Removed -->
             </div>
         </div>
 
@@ -192,7 +188,7 @@
                 <!-- Search Bar -->
                 <div class="relative w-full max-w-2xl group-search">
                     <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-black font-extrabold text-[20px] pointer-events-none">search</span>
-                    <input type="text" placeholder="Search" class="w-full bg-white border-2 border-black rounded-xl pl-12 pr-4 py-2 text-[15px] font-bold text-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] focus:-translate-y-1 transition-all placeholder:text-slate-400">
+                    <input type="text" id="dashboardSearch" placeholder="Search projects..." class="w-full bg-white border-2 border-black rounded-xl pl-12 pr-4 py-2 text-[15px] font-bold text-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] focus:-translate-y-1 transition-all placeholder:text-slate-400">
                 </div>
             </div>
 
@@ -238,13 +234,31 @@
                         <!-- Horizontal Scroll / Flex container for projects -->
                         <div class="flex gap-6 mb-12 overflow-x-auto pb-4 pt-2 px-2 -mx-2">
                             @foreach($projects->take(4) as $project)
-                            <a href="{{ route('projects.show', $project) }}" class="min-w-[240px] flex-1 bg-white border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] transition-all cursor-pointer group flex items-start gap-4">
-                                <div class="w-12 h-12 flex-shrink-0 rounded-xl border-2 border-black bg-purple-100 flex items-center justify-center font-black text-lg text-black group-hover:bg-yellow-200 transition-colors shadow-[2px_2px_0px_0px_#000]">
-                                    {{ substr($project->name, 0, 1) }}
+                                @php
+                                    $totalTasks = $project->tasks()->count();
+                                    $doneTasks = 0;
+                                    foreach($project->statuses as $st) {
+                                        if(strtolower($st->name) === 'done') {
+                                            $doneTasks += $st->tasks()->count();
+                                        }
+                                    }
+                                    $progress = $totalTasks > 0 ? round(($doneTasks / $totalTasks) * 100) : 0;
+                                @endphp
+                            <a href="{{ route('projects.show', $project) }}" class="project-card min-w-[240px] flex-1 bg-white border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] transition-all cursor-pointer group flex flex-col justify-between">
+                                <div class="flex items-start gap-4 mb-4">
+                                    <div class="w-12 h-12 flex-shrink-0 rounded-xl border-2 border-black bg-purple-100 flex items-center justify-center font-black text-lg text-black group-hover:bg-yellow-200 transition-colors shadow-[2px_2px_0px_0px_#000]">
+                                        {{ substr($project->name, 0, 1) }}
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <h4 class="text-base font-bold text-black truncate">{{ $project->name }}</h4>
+                                        <p class="text-xs font-bold text-slate-500 mt-1">{{ $totalTasks }} Tasks</p>
+                                    </div>
                                 </div>
-                                <div class="min-w-0 flex-1">
-                                    <h4 class="text-base font-bold text-black truncate">{{ $project->name }}</h4>
-                                    <p class="text-xs font-bold text-slate-500 mt-1">Pulse Software project</p>
+                                <div class="flex items-center gap-3">
+                                    <div class="flex-1 h-2 bg-slate-200 border-2 border-black rounded-full overflow-hidden">
+                                        <div class="h-full bg-emerald-400 border-r-2 border-black" style="width: {{ $progress }}%"></div>
+                                    </div>
+                                    <span class="text-[12px] font-extrabold text-black">{{ $progress }}%</span>
                                 </div>
                             </a>
                             @endforeach
@@ -261,7 +275,17 @@
                         <!-- List of Projects / Items -->
                         <div class="bg-white border-2 border-black rounded-2xl shadow-[4px_4px_0px_0px_#000] overflow-hidden">
                             @foreach($projects as $project)
-                            <div class="flex items-center gap-4 p-4 border-b-2 border-black last:border-b-0 hover:bg-yellow-50 transition-colors cursor-pointer group">
+                                @php
+                                    $totalTasksList = $project->tasks()->count();
+                                    $doneTasksList = 0;
+                                    foreach($project->statuses as $st) {
+                                        if(strtolower($st->name) === 'done') {
+                                            $doneTasksList += $st->tasks()->count();
+                                        }
+                                    }
+                                    $progressList = $totalTasksList > 0 ? round(($doneTasksList / $totalTasksList) * 100) : 0;
+                                @endphp
+                            <div class="project-list-item flex items-center gap-4 p-4 border-b-2 border-black last:border-b-0 hover:bg-yellow-50 transition-colors cursor-pointer group" onclick="window.location='{{ route('projects.show', $project) }}'">
                                 <div class="w-5 h-5 rounded-md border-2 border-black bg-white group-hover:shadow-[1px_1px_0px_0px_#000] flex-shrink-0 cursor-pointer"></div>
                                 <div class="w-10 h-10 flex-shrink-0 rounded-xl border-2 border-black bg-purple-100 flex items-center justify-center font-black text-black group-hover:bg-purple-200 transition-colors shadow-[2px_2px_0px_0px_#000]">
                                     {{ substr($project->name, 0, 1) }}
@@ -269,8 +293,14 @@
                                 <div class="flex-1 min-w-0">
                                     <h4 class="text-[15px] font-bold text-black truncate">{{ $project->name }}</h4>
                                     <div class="flex items-center gap-2 mt-1">
-                                        <p class="text-xs font-bold text-slate-500">{{ $project->name }} \ Pulse Software project</p>
+                                        <p class="text-xs font-bold text-slate-500">{{ $project->key }} &bull; {{ $totalTasksList }} Tasks</p>
                                     </div>
+                                </div>
+                                <div class="hidden md:flex items-center gap-3 w-48">
+                                    <div class="flex-1 h-2 bg-slate-200 border-2 border-black rounded-full overflow-hidden">
+                                        <div class="h-full bg-emerald-400 border-r-2 border-black" style="width: {{ $progressList }}%"></div>
+                                    </div>
+                                    <span class="text-[12px] font-extrabold text-black">{{ $progressList }}%</span>
                                 </div>
                             </div>
                             @endforeach
@@ -400,6 +430,26 @@
                     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-on-btn'));
                     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-on-btn'));
                 });
+
+                // Dashboard Search Logic
+                const searchInput = document.getElementById('dashboardSearch');
+                if (searchInput) {
+                    searchInput.addEventListener('input', function(e) {
+                        const term = e.target.value.toLowerCase();
+                        
+                        // Filter project cards
+                        document.querySelectorAll('.project-card').forEach(card => {
+                            const name = card.querySelector('h4').textContent.toLowerCase();
+                            card.style.display = name.includes(term) ? 'flex' : 'none';
+                        });
+
+                        // Filter project list items
+                        document.querySelectorAll('.project-list-item').forEach(item => {
+                            const name = item.querySelector('h4').textContent.toLowerCase();
+                            item.style.display = name.includes(term) ? 'flex' : 'none';
+                        });
+                    });
+                }
             }
         })();
     </script>

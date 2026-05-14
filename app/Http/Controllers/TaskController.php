@@ -51,7 +51,7 @@ class TaskController extends Controller
         ]);
 
         $task->fill($request->only([
-            'title', 'description', 'status_id', 'priority', 'type', 'order', 'assignee_id'
+            'title', 'description', 'status_id', 'priority', 'type', 'order', 'assignee_id', 'due_date', 'story_points'
         ]));
         
         $task->save();

@@ -182,24 +182,47 @@
                     <!-- Filters toolbar -->
                     <div class="flex flex-wrap items-center gap-4 mb-2">
                         <div class="relative">
-                            <input type="text" placeholder="Search board..." class="pl-4 pr-10 py-2 bg-white border-2 border-black rounded-xl text-[14px] font-bold w-[220px] focus:outline-none focus:shadow-[3px_3px_0px_0px_#630ed4] transition-all">
+                            <input type="text" id="boardSearchInput" placeholder="Search board..." class="pl-4 pr-10 py-2 bg-white border-2 border-black rounded-xl text-[14px] font-bold w-[220px] focus:outline-none focus:shadow-[3px_3px_0px_0px_#630ed4] transition-all">
                             <span class="material-symbols-outlined absolute right-3 top-2 text-[20px] text-black font-bold">search</span>
                         </div>
                         <div class="flex -space-x-2">
                             <div class="w-10 h-10 rounded-full border-2 border-black bg-orange-400 flex items-center justify-center text-[14px] font-extrabold text-black cursor-pointer shadow-[2px_2px_0px_0px_#000] z-10" title="{{ auth()->user()->name ?? 'User' }}">
                                 {{ substr(auth()->user()->name ?? 'U', 0, 1) }}
                             </div>
-                            <div class="w-10 h-10 rounded-full border-2 border-black bg-white flex items-center justify-center text-[20px] font-bold text-black cursor-pointer shadow-[2px_2px_0px_0px_#000] hover:bg-slate-100 z-0">
-                                <span class="material-symbols-outlined">person_add</span>
-                            </div>
                         </div>
                         <div class="h-8 w-px bg-black opacity-20 hidden md:block"></div>
-                        <button onclick="showToast('Advanced filtering is rolling out soon!', 'filter_list')" class="px-4 py-2 bg-white border-2 border-black rounded-xl font-bold text-black hover:bg-pink-100 transition-all shadow-[2px_2px_0px_0px_#000] btn-fun text-[14px] flex items-center gap-2">
-                            <span class="material-symbols-outlined text-[18px]">filter_list</span> Filter
+                        <button onclick="toggleQuickFilter('bug', this)" class="quick-filter-btn px-4 py-2 bg-white border-2 border-black rounded-xl font-bold text-black hover:bg-red-100 transition-all shadow-[2px_2px_0px_0px_#000] btn-fun text-[14px] flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px] text-red-500">bug_report</span> Bugs
                         </button>
-                        <button onclick="showToast('Grouping by epic coming soon!', 'expand_more')" class="px-4 py-2 bg-white border-2 border-black rounded-xl font-bold text-black hover:bg-blue-100 transition-all shadow-[2px_2px_0px_0px_#000] btn-fun text-[14px] flex items-center gap-2">
-                            Group <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                        <button onclick="toggleQuickFilter('high', this)" class="quick-filter-btn px-4 py-2 bg-white border-2 border-black rounded-xl font-bold text-black hover:bg-orange-100 transition-all shadow-[2px_2px_0px_0px_#000] btn-fun text-[14px] flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px] text-orange-500">keyboard_arrow_up</span> High Priority
                         </button>
+                        <button id="clearFiltersBtn" onclick="clearFilters()" class="hidden px-4 py-2 bg-slate-800 text-white border-2 border-black rounded-xl font-bold hover:bg-slate-700 transition-all shadow-[2px_2px_0px_0px_#000] btn-fun text-[14px] flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">clear_all</span> Clear
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                @php
+                    $totalTasks = 0;
+                    $doneTasks = 0;
+                    foreach($statuses as $st) {
+                        $count = $st->tasks->count();
+                        $totalTasks += $count;
+                        if(strtolower($st->name) === 'done') {
+                            $doneTasks += $count;
+                        }
+                    }
+                    $progress = $totalTasks > 0 ? round(($doneTasks / $totalTasks) * 100) : 0;
+                @endphp
+                <div class="px-8 pb-4 relative z-10 shrink-0">
+                    <div class="flex items-center gap-4">
+                        <span class="text-[13px] font-extrabold text-slate-500">PROJECT PROGRESS</span>
+                        <div class="flex-1 h-3 bg-slate-200 border-2 border-black rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald-400 border-r-2 border-black transition-all duration-500" style="width: {{ $progress }}%"></div>
+                        </div>
+                        <span class="text-[13px] font-extrabold text-black">{{ $progress }}%</span>
                     </div>
                 </div>
 
@@ -347,26 +370,10 @@
                             <textarea name="description" id="detailTaskDesc" rows="6" class="w-full text-[15px] font-medium text-black bg-[#f8fafc] border-2 border-black focus:bg-white focus:shadow-[3px_3px_0px_0px_#630ed4] transition-all rounded-xl px-4 py-3 outline-none" placeholder="Add a description..."></textarea>
                         </div>
                         
-                        <!-- Activity -->
-                        <div class="mt-12 pt-8 border-t-4 border-black border-dashed">
-                            <div class="flex justify-between items-center mb-6">
-                                <h3 class="text-[18px] font-extrabold text-black">Activity</h3>
-                                <div class="text-[14px] font-bold text-black border-2 border-black bg-white px-3 py-1.5 rounded-lg shadow-[2px_2px_0px_0px_#000]">
-                                    Comments
-                                </div>
-                            </div>
-                            
-                            <div class="flex gap-4 items-start mb-6">
-                                <div class="w-10 h-10 rounded-full border-2 border-black bg-orange-400 flex items-center justify-center text-[14px] font-extrabold text-black shrink-0 shadow-[2px_2px_0px_0px_#000]">
-                                    {{ substr(auth()->user()->name ?? 'U', 0, 1) }}
-                                </div>
-                                <div class="flex-1">
-                                    <input type="text" class="w-full bg-white border-2 border-black rounded-xl px-4 py-3 text-[15px] font-bold outline-none focus:shadow-[3px_3px_0px_0px_#630ed4] transition-all" placeholder="Add a comment...">
-                                    <div class="mt-3 flex gap-2">
-                                        <button type="submit" class="px-6 py-2 bg-purple-600 border-2 border-black text-white hover:bg-purple-700 rounded-xl font-extrabold text-[14px] shadow-[3px_3px_0px_0px_#000] btn-fun">Save Details</button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mt-8 pt-6 border-t-4 border-black border-dashed flex justify-end">
+                            <button type="submit" class="px-8 py-3 bg-purple-600 border-2 border-black text-white hover:bg-purple-700 rounded-xl font-extrabold text-[15px] shadow-[3px_3px_0px_0px_#000] btn-fun flex items-center gap-2">
+                                <span class="material-symbols-outlined">save</span> Save Details
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -388,14 +395,16 @@
                             Details
                         </div>
                         <div class="p-5 space-y-5">
+
+                            
                             <div class="flex flex-col gap-2">
-                                <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Assignee</label>
-                                <select name="assignee_id" id="detailTaskAssignee" form="editTaskForm" class="w-full bg-[#f8fafc] border-2 border-black rounded-lg px-3 py-2 text-[14px] font-bold text-black focus:shadow-[2px_2px_0px_0px_#630ed4] transition-all cursor-pointer outline-none">
-                                    <option value="">Unassigned</option>
-                                    @foreach($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
+                                <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Due Date</label>
+                                <input type="date" name="due_date" id="detailTaskDueDate" form="editTaskForm" class="w-full bg-[#f8fafc] border-2 border-black rounded-lg px-3 py-2 text-[14px] font-bold text-black focus:shadow-[2px_2px_0px_0px_#630ed4] transition-all outline-none">
+                            </div>
+                            
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[13px] font-bold text-slate-500 uppercase tracking-widest">Story Points</label>
+                                <input type="number" name="story_points" id="detailTaskStoryPoints" form="editTaskForm" min="0" max="100" class="w-full bg-[#f8fafc] border-2 border-black rounded-lg px-3 py-2 text-[14px] font-bold text-black focus:shadow-[2px_2px_0px_0px_#630ed4] transition-all outline-none" placeholder="e.g. 5">
                             </div>
                             
                             <div class="flex flex-col gap-2">
@@ -624,8 +633,8 @@
                 document.getElementById('detailTaskStatus').value = task.status_id;
                 document.getElementById('detailTaskPriority').value = task.priority;
                 document.getElementById('detailTaskTypeSelect').value = t;
-                document.getElementById('detailTaskAssignee').value = task.assignee_id || '';
-                
+                document.getElementById('detailTaskDueDate').value = task.due_date || '';
+                document.getElementById('detailTaskStoryPoints').value = task.story_points || '';                
                 modal.classList.remove('hidden');
                 
                 const titleTextarea = document.getElementById('detailTaskTitle');
@@ -637,6 +646,64 @@
                     this.style.height = (this.scrollHeight) + 'px';
                 });
             };
+
+            // Board Search and Filter Logic
+            const boardSearch = document.getElementById('boardSearchInput');
+            let activeFilters = [];
+
+            window.toggleQuickFilter = function(filter, btn) {
+                if (activeFilters.includes(filter)) {
+                    activeFilters = activeFilters.filter(f => f !== filter);
+                    btn.classList.remove('bg-purple-100', 'border-purple-600');
+                } else {
+                    activeFilters.push(filter);
+                    btn.classList.add('bg-purple-100', 'border-purple-600');
+                }
+                applyFilters();
+            };
+
+            window.clearFilters = function() {
+                activeFilters = [];
+                document.querySelectorAll('.quick-filter-btn').forEach(btn => btn.classList.remove('bg-purple-100', 'border-purple-600'));
+                if (boardSearch) boardSearch.value = '';
+                applyFilters();
+            };
+
+            function applyFilters() {
+                const term = boardSearch ? boardSearch.value.toLowerCase() : '';
+                
+                document.querySelectorAll('.task-card').forEach(card => {
+                    const title = card.querySelector('h4').textContent.toLowerCase();
+                    const key = card.querySelector('.text-slate-600').textContent.toLowerCase();
+                    const type = card.dataset.type;
+                    const priority = card.dataset.priority;
+                    
+                    let matchSearch = title.includes(term) || key.includes(term);
+                    let matchFilter = true;
+
+                    if (activeFilters.length > 0) {
+                        if (activeFilters.includes('bug') && type !== 'bug') matchFilter = false;
+                        if (activeFilters.includes('high') && priority !== 'high') matchFilter = false;
+                    }
+
+                    if (matchSearch && matchFilter) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (activeFilters.length > 0 || term.length > 0) {
+                    document.getElementById('clearFiltersBtn').classList.remove('hidden');
+                } else {
+                    document.getElementById('clearFiltersBtn').classList.add('hidden');
+                }
+                updateCounts();
+            }
+
+            if (boardSearch) {
+                boardSearch.addEventListener('input', applyFilters);
+            }
         })();
 
         // Neo-brutalist Toast System

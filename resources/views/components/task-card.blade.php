@@ -20,6 +20,8 @@
 <div class="task-card bg-white rounded-xl flex flex-col p-4 border-2 border-black shadow-[2px_2px_0px_0px_#000] hover:shadow-[4px_4px_0px_0px_#630ed4] hover:-translate-y-1 mb-3 transition-all relative group cursor-pointer" 
      draggable="true" 
      data-id="{{ $task->id }}"
+     data-type="{{ $task->type ?? 'task' }}"
+     data-priority="{{ $task->priority ?? 'medium' }}"
      onclick="openTaskDetails({{ json_encode($task) }}, '{{ $project->key }}')">
     
     <div class="flex-1 mb-4">
@@ -51,16 +53,22 @@
                 <span class="material-symbols-outlined text-[16px] font-extrabold">{{ $prio['icon'] }}</span>
             </div>
 
-            <!-- Assignee -->
-            @if($task->assignee_id)
-                <div class="w-7 h-7 rounded-full border-2 border-black bg-orange-300 flex items-center justify-center text-[10px] font-extrabold text-black overflow-hidden shadow-[1px_1px_0px_0px_#000]" title="{{ $task->assignee->name }}">
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($task->assignee->name) }}&background=E2E8F0&color=374151&size=28" alt="Assignee">
-                </div>
-            @else
-                <div class="w-7 h-7 rounded-full border-2 border-black border-dashed bg-slate-50 flex items-center justify-center text-slate-400" title="Unassigned">
-                    <span class="material-symbols-outlined text-[16px]">person_outline</span>
+            <!-- Story Points -->
+            @if($task->story_points)
+                <div class="w-6 h-6 rounded-full border-2 border-black bg-slate-200 flex items-center justify-center text-[11px] font-extrabold text-black shadow-[1px_1px_0px_0px_#000]" title="{{ $task->story_points }} Story Points">
+                    {{ $task->story_points }}
                 </div>
             @endif
-        </div>
+
+            <!-- Due Date -->
+            @if($task->due_date)
+                @php
+                    $isOverdue = \Carbon\Carbon::parse($task->due_date)->startOfDay()->isPast();
+                    $dateColor = $isOverdue ? 'bg-red-200 text-red-800' : 'bg-slate-100 text-slate-800';
+                @endphp
+                <div class="px-2 h-6 rounded-md border-2 border-black {{ $dateColor }} flex items-center justify-center text-[10px] font-extrabold shadow-[1px_1px_0px_0px_#000]" title="Due: {{ $task->due_date }}">
+                    {{ \Carbon\Carbon::parse($task->due_date)->format('M d') }}
+                </div>
+            @endif        </div>
     </div>
 </div>

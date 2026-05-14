@@ -17,7 +17,9 @@ class Task extends Model
         'status_id',
         'priority',
         'assignee_id',
-        'order'
+        'order',
+        'due_date',
+        'story_points'
     ];
 
     public function status()
